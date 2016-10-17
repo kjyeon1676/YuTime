@@ -1,0 +1,23 @@
+h2(style="margin-left:33%;") YoUTime 회원가입
+hr
+form(name="sign_up" method="post" style="margin-left:18%;")
+  input(type="email" id="EMailin" name="EMail" placeholder="E-Mail" class="form-control" maxlength=50 style="width:60%;")
+  p
+  input(type="password" id="PassWord" name="PassWord" placeholder="PassWord" class="form-control" maxlength=50 style="width:60%;")
+  p
+  input(type="password" id="PassWordRe" name="PassWordRe" placeholder="PassWord 확인" class="form-control" maxlength=50 style="width:60%;")
+  p
+  input(type="text" id="NickName" name="Name" placeholder="이름[닉네임]" class="form-control" maxlength=15 style="width:60%;")
+  p
+  SELECT(class="form-control" name="Grade" id="Grade" style="width:60%;")
+    option(value="1") 1학년
+    option(value="2") 2학년
+    option(value="3") 3학년
+    option(value="4") 4학년
+    option(value="5") 5학년
+    option(value="6") 6학년
+    option(value="7") 6학년 이상
+  p
+  input(type="text" id="Major" name="Major" placeholder="전공" class="form-control" maxlength=15 style="width:60%;")
+  p
+  input(type="button" id="Submit" value="가입" class="form-control" onclick="signup_check()" style="width:60%;")

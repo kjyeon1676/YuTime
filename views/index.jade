@@ -1,0 +1,58 @@
+-function leadingZeros(n, digits) {
+-  var zero = '';
+-  n = n.toString();
+-  if (n.length < digits) {for (var i = 0; i < digits - n.length; i++){zero += '0';  }}
+-  return zero + n;}
+table(id="timetablecontainor" name="timetable" width="690px" style="text-align:center;float:left; margin-right:3%" ondrop="drop(this,event)" ondragover="allowDrop(this,event)")
+  tr
+    th(width="90px" height="40px" style="text-align:center") 시간\요일
+    th(style="min-width:100px;text-align:center" name="timetable") 월
+    th(style="min-width:100px;text-align:center" name="timetable") 화
+    th(style="min-width:100px;text-align:center" name="timetable") 수
+    th(style="min-width:100px;text-align:center" name="timetable") 목
+    th(style="min-width:100px;text-align:center" name="timetable") 금
+    th(style="min-width:100px;text-align:center" name="timetable") 토
+  - for(var i=4;i<22;++i){if(i%2==0){
+  tr(style="background-color:rgb(240,250,255);" name="timetable")
+    td(style="height:30px; text-align:left;") #{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)} - #{leadingZeros(7+parseInt((i+1)/2),2)}:#{leadingZeros(((i+1)%2)*30,2)}
+    td(style="height:30px; text-align:left;" id="월#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="화#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="수#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="목#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="금#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="토#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+  -} else {
+  tr
+    td(style="height:30px; text-align:left;") #{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)} - #{leadingZeros(7+parseInt((i+1)/2),2)}:#{leadingZeros(((i+1)%2)*30,2)}
+    td(style="height:30px; text-align:left;" id="월#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="화#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="수#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="목#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="금#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:30px; text-align:left;" id="토#{leadingZeros(7+parseInt(i/2),2)}:#{leadingZeros((i%2)*30,2)}" rowspan="1" display="" name="timetable")
+  -}}
+  - for(var i=0;i<300;i+=50){if((i/50)%2==0){
+  tr(style="background-color:rgb(240,250,255);" name="timetable")
+    td(style="height:60px; text-align:left;") #{leadingZeros(18+parseInt(i/60),2)}:#{leadingZeros((i%60),2)} - #{leadingZeros(18+parseInt((i+50)/60),2)}:#{leadingZeros(((i+45)%60),2)}
+    td(style="height:60px; text-align:left;" id="월#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="화#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="수#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="목#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="금#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="토#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+  -} else {
+  tr
+    td(style="height:60px; text-align:left;") #{leadingZeros(18+parseInt(i/60),2)}:#{leadingZeros((i%60),2)} - #{leadingZeros(18+parseInt((i+49)/60),2)}:#{leadingZeros(((i+45)%60),2)}
+    td(style="height:60px; text-align:left;" id="월#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="화#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="수#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="목#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="금#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+    td(style="height:60px; text-align:left;" id="토#{parseInt(18+(i/50)/2)}:#{leadingZeros(((i/50)%2)*30,2)}" rowspan="1" display="" name="timetable")
+  -}}
+h2 YoUTime입니다.
+hr
+좀 더 원활한 서비스를 원하시면
+회원가입을 해주세요.
+p
+추가사항이나 원하시는 사항이 있으시면 아래의 메일로 문의 주시기 바랍니다.

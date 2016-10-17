@@ -1,0 +1,86 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
+    script(src='http://code.jquery.com/jquery-2.1.0.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type='text/javascript',src='/socket.io/socket.io.js')
+    script(type='text/javascript',src='/javascripts/script.js')
+
+  body
+    #Notice(style="position:fixed; width:40%; border:solid 3px rgba(24,72,125,0.5); background-color:rgba(230,237,250,0.95); transition:0.5s; top:-10%;left:30%;z-index:10000;padding:1%; text-align:center;font-size:20px;" onclick="Close_Notice()")
+    #EMail(EMail="#{EMail}")
+    nav(class="navbar navbar-inverse navbar-fixed-top")
+      .container-fluid
+        .navbar-header
+          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+            span(class="sr-onlyToggle navigation")
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href="/") 영남대학교 타임테이블 :: #{EMail}
+        #navbar.navbar-collapse collapse
+          ul(class="nav navbar-nav navbar-right")
+            - if(Rank=='관리자'){
+            li
+              a(href="/admin") 관리
+            - }
+            - if(Rank=='손님'){
+            li
+              a(href="/login") 로그인
+            li
+              a(href="/sign_up") 회원가입
+            - } else{
+            li
+              a(href="/logout") 로그아웃
+            - }
+            li
+              a(href="#") 도움말
+    .container-fluid
+      .row
+        div(class="col-sm-3 col-md-2 sidebar" style="width:200px;")
+          ul(class="nav nav-sidebar")
+            -if(title=='시간표 만들기'){
+              li.active
+                a(href="/make_timetable") 시간표 만들기
+            -}else{
+              li
+                a(href="/make_timetable") 시간표 만들기
+            -}
+            -if(Rank!='손님'){if(title=='평가'){
+              li.active
+                a(href="/evaluation") 평가/학점매기기
+            -}else{
+              li
+                a(href="/evaluation") 평가/학점매기기
+            -}}
+            -if(title=='평가 보기'){
+              li.active
+                a(href="/community") 강의 평가 보기
+            -} else{
+              li
+                a(href="/community") 강의 평가 보기
+            -}
+            -if(Rank!='손님'){if(title=='설정'){
+              li.active
+                a(href="/preference") 설정:
+            -}else{
+              li
+                a(href="/preference") 설정:
+            -}}
+        div
+          div(class="col-md-offset-2 main" style="margin-top:50px; margin-left:250px;")
+            !=body
+hr
+footer(style="text-align:center")
+  p
+    p
+      | Made by 계획대로Team in Samsung Software Membership
+      p
+      |    rattan32@naver.com and kjyeon1676@naver.com

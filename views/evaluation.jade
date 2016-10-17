@@ -1,0 +1,136 @@
+h2(style="text-align:center;") 평가 / 학점 매기기
+hr(border:"2" bordercolor:"red")
+table(width="70%" border="solid 1px" style="margin:2.5%; margin-top:1%;float:left;")
+  tr
+    th(style="text-align:center") 수강번호
+    th(style="text-align:center") 과목 명
+    th(style="text-align:center") 교수
+    th(style="text-align:center") 개설 학과
+    th(style="text-align:center") 학점
+    th(style="text-align:center") 이수구분
+    th(style="text-align:center") 펼치기
+  - data.forEach(function(item,index){
+  tr(id="cont#{item.CourseNumber+item.Department}" onclick="toggle_evaluation_detail('#{item.CourseNumber+item.Department}')")
+    td(style="text-align:center") #{item.CourseNumber}
+    td(style="text-align:center") #{item.CourseName}
+    td(style="text-align:center") #{item.Professor}
+    td(style="text-align:center") #{item.Department}
+    td(style="text-align:center" id="creditup#{item.CourseNumber+item.Department}") #{item.Credit}/#{item.MyCredit}
+    td(style="text-align:center" id="div#{item.CourseNumber+item.Department}") #{item.Division}
+    td(style="text-align:center; width:7%;")
+      div(id="tri#{item.CourseNumber+item.Department}" style="margin:-5px; font-size:20px;transition:ease 1s;") ⩔
+  tr(style="border:solid 0px;")
+    td(colspan="7")
+      div(id="#{item.CourseNumber+item.Department}" style="height:0px; background-color:rgba(133,200,155,0.4);transition:ease 0.5s; opacity:0; visibility:hidden")
+        table(style="width:100%;")
+          tr
+            td(style="text-align:center;") 학점
+            td(style="width:10%;")
+              SELECT(id="credit#{item.CourseNumber+item.Department}")
+                -if(item.IsPass==1){
+                -if(item.MyCredit==4.5){
+                option(value="4.5" selected) Pass
+                option(value="0.0" ) Fail
+                -} else {
+                option(value="4.5" ) Pass
+                option(value="0.0" selected) Fail
+                -}
+                -} else {
+                -if(item.MyCredit==4.5){
+                option(value="4.5" selected) A+
+                -} else {
+                option(value="4.5") A+
+                -}
+                -if(item.MyCredit==4.0){
+                option(value="4.0" selected) A
+                -} else {
+                option(value="4.0") A
+                -}
+                -if(item.MyCredit==3.5){
+                option(value="3.5" selected) B+
+                -} else {
+                option(value="3.5") B+
+                -}
+                -if(item.MyCredit==3.0){
+                option(value="3.0" selected) B
+                -} else {
+                option(value="3.0") B
+                -}
+                -if(item.MyCredit==2.5){
+                option(value="2.5" selected) C+
+                -} else {
+                option(value="2.5") C+
+                -}
+                -if(item.MyCredit==2.0){
+                option(value="2.0" selected) C
+                -} else {
+                option(value="2.0") C
+                -}
+                -if(item.MyCredit==1.5){
+                option(value="1.5" selected) D+
+                -} else {
+                option(value="1.5") D+
+                -}
+                -if(item.MyCredit==1.0){
+                option(value="1.0" selected) D
+                -} else {
+                option(value="1.0") D
+                -}
+                -if(item.MyCredit==0.0){
+                option(value="0.0" selected) F
+                -} else {
+                option(value="0.0") F
+                -}
+                -}
+            td |
+            td(style="text-align:center;") 학점공개
+            td
+              -if(item.IsPublic==0){
+              input(type="checkbox" value="학점 공개" id="public#{item.CourseNumber+item.Department}")
+              -}else{
+              input(type="checkbox" value="학점 공개" id="public#{item.CourseNumber+item.Department}" checked)
+              -}
+              
+            td(style="text-align:center;") |
+            td(style="text-align:center;") 별점
+            td
+              .star_rating(score="3" id="score#{item.CourseNumber+item.Department}")
+                -for(var i=0;i<item.Score;++i){
+                a(href="#" onclick="click_star(this)" class="on" style="text-decoration:none") ★
+                -} for(var i=item.Score;i<5;++i) {
+                a(href="#" onclick="click_star(this)" style="text-decoration:none") ★
+                -}
+            td |
+            -if(item.Evaluation!=null){
+            td(id="length#{item.CourseNumber+item.Department}" style="text-align:center;") #{item.Evaluation.length}/5000
+            -} else {
+            td(id="length#{item.CourseNumber+item.Department}" style="text-align:center;") 0/5000
+            -}
+            td
+              input(type="button" value="등록" onclick="send_evaluation('#{item.CourseNumber+item.Department}')")
+            td(id="Ack#{item.CourseNumber+item.Department}")
+        textarea(id="text#{item.CourseNumber+item.Department}" style="resize:none; width:100%; height:70%; margin-top:1%" onkeydown="calc_text_length(this,'length#{item.CourseNumber+item.Department}')" onkeyup="calc_text_length(this,'length#{item.CourseNumber+item.Department}')") #{item.Evaluation}
+  -});
+div(style="width:20%; border:solid 1px; float:left; border-radius:5px;padding:1%;") 학점 계산(평가한 과목만 적용)
+  P
+  -if(rat_alld!=0){
+  #rat_all(M='#{rat_all}' D='#{rat_alld}')  총 평점 평균 #{(rat_all/rat_alld).toFixed(2)}/4.5
+  -} else{
+  #rat_all(M='#{rat_all}' D='#{rat_alld}')
+  -} if(rat_majd!=0){
+  #rat_maj(M='#{rat_maj}' D='#{rat_majd}')  전공 평점 평균 #{(rat_maj/rat_majd).toFixed(2)}/4.5
+  -} else {
+  #rat_maj(M='#{rat_maj}' D='#{rat_majd}')
+  -} if(rat_libd!=0){
+  #rat_lib(M='#{rat_lib}' D='#{rat_libd}')  교양 평점 평균 #{(rat_lib/rat_libd).toFixed(2)}/4.5
+  -} else {
+  #rat_lib(M='#{rat_lib}' D='#{rat_libd}')
+  -} if(rat_tecd!=0){
+  #rat_tec(M='#{rat_tec}' D='#{rat_tecd}')  교직 평점 평균 #{(rat_tec/rat_tecd).toFixed(2)}/4.5
+  -} else {
+  #rat_tec(M='#{rat_tec}' D='#{rat_tecd}')
+  -} if(rat_nord!=0){
+  #rat_nor(M='#{rat_nor}' D='#{rat_nord}')  일반 평점 평균 #{(rat_nor/rat_nord).toFixed(2)}/4.5
+  -} else {
+  #rat_nor(M='#{rat_nor}' D='#{rat_nord}')
+  -}

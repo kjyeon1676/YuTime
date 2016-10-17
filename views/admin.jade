@@ -1,0 +1,60 @@
+input(type="button" class="form-control" style="" onclick="socket.emit('get_timetable_data_from_YU_server');" value="시간표 데이터 최신화")
+p
+input(type="text" id="broadcast_text" class="form-control" placeholder="접속자 공지" style="width:89%;margin-right:1%;float:left;")
+input(type="button" class="form-control" style="width:10%;" value="공지!" onclick="broadcast_to_online()")
+p
+table(style="border:solid 1px rgb(150,150,150); margin-right:3%;float:left;")
+  tr(style="border:solid 1px rgb(150,150,150);")
+    th(width="200px" style="border:solid 1px rgb(150,150,150); text-align:center;") E-Mail
+    th(width="100px" style="border:solid 1px rgb(150,150,150); text-align:center;") 이름
+    th(width="100px" style="border:solid 1px rgb(150,150,150); text-align:center;") 직책/상태
+  -userdata.forEach(function(item,index){
+    tr(style="border:solid 1px rgb(150,150,150);")
+      td(style="border:solid 1px rgb(150,150,150);") #{item.EMail}
+      td(style="border:solid 1px rgb(150,150,150); text-align:center;") #{item.Name}
+      -if(item.Rank=='관리자'){
+      td(style="border:solid 1px rgb(150,150,150); text-align:center;") #{item.Rank}
+      -}else {
+      td(style="border:solid 1px rgb(150,150,150); text-align:center;")
+        SELECT(onchange="update_user_rank(\'#{item.EMail}\',this.value)")
+          -if(item.Rank=='학생'){
+          option(value="학생" selected) 학생
+          -} else {
+          option(value="학생") 학생
+          -} if(item.Rank=='차단'){
+          option(value="차단" selected) 차단
+          -} else{
+          option(value="차단") 차단
+  -}}})
+div(id="badkeywords" style="opacity:0.3; width:65%; height:100px; overflow-y:scroll; border:solid 1px; float:left;margin-right:5px;font-size:9px; padding:10px;") #{badkeywords}
+p
+input(type="text" id="badkeywordsinput" style=" width:15%;" placeholder="새로운 필터링할 단어 입력")
+input(type="button" style="margin-left:5px;" value="추가" onclick="insert_badkeyword()")
+p
+table(style="float:bottom;")
+  tr
+    th(width="200px" style="border:solid 1px rgb(150,150,150); text-align:center;") E-Mail
+    th(width="100px" style="border:solid 1px rgb(150,150,150); text-align:center;") 이름
+    th(width="100px" style="border:solid 1px rgb(150,150,150); text-align:center;") 직책/상태
+    th(style="border:solid 1px rgb(150,150,150); text-align:center;") 쓴 내용
+  -if(evaluation==''){} else {evaluation.forEach(function(item,index){
+    tr
+      td(style="border:solid 1px rgb(150,150,150);") #{item.EMail}
+      td(style="border:solid 1px rgb(150,150,150); text-align:center;") #{item.Name}
+      -if(item.Rank=='관리자'){
+      td(style="border:solid 1px rgb(150,150,150); text-align:center;") #{item.Rank}
+      -}else {
+      td(style="border:solid 1px rgb(150,150,150); text-align:center;")
+        SELECT(onchange="update_user_rank(\'#{item.EMail}\',this.value)")
+          -if(item.Rank=='학생'){
+          option(value="학생" selected) 학생
+          -} else {
+          option(value="학생") 학생
+          -} if(item.Rank=='차단'){
+          option(value="차단" selected) 차단
+          -} else{
+          option(value="차단") 차단
+      -}}
+      td(style="border:solid 1px rgb(150,150,150);") #{item.Evaluation}
+        input(type="button" value="고치기" style="margin-left:20px;" onclick="fix_evaluation(this,\'#{item.EMail}\',\'#{item.CourseNumber}\',\'#{item.Department}\')")
+  -})}
